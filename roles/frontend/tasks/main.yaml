@@ -37,18 +37,9 @@
 #     dest: /etc/nginx/default.d/expense.conf
 
 - name: copy nginx config
-  ansible.builtin.copy:
+  ansible.builtin.template:
+    src: expense.conf.j2
     dest: /etc/nginx/default.d/expense.conf
-    content: |
-      location /api/ {
-          proxy_pass http://{{ BACKEND_HOST }}/;
-          proxy_http_version 1.1;
-      }
-
-      location /health {
-          stub_status on;
-          access_log off;
-      }
 
 - name: restart nginx
   ansible.builtin.service:
